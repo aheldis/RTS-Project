@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 public class GraphicalClock extends Thread {
     LocalTime time;
+    public int threadNum;
 
     void setTime(LocalTime time) {
         this.time = time;
@@ -18,14 +19,12 @@ public class GraphicalClock extends Thread {
         JFrame frame = new JFrame("Graphical Clock");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.PINK);
-        
-        // create label to print time
         JLabel timeLabel = new JLabel("", SwingConstants.CENTER);
         timeLabel.setPreferredSize(new Dimension(400, 200));
+        timeLabel.setLocation(100, 500);
         timeLabel.setFont(new Font("Georgia", Font.BOLD, 40));
         frame.getContentPane().add(timeLabel, BorderLayout.CENTER);
-        
-        // Display the window
+
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
