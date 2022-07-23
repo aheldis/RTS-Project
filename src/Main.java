@@ -26,25 +26,24 @@ public class Main extends Thread{
     }
 
     public void run(){
-        System.out.println("trying hard");
         currentTime = Instant.now().getEpochSecond();
         Random rand = new Random();
         while (true) {
 
             try {
                 Thread.sleep(1000);
-                if (cpu() > 90){
+                if (cpu() > 0.9){
                     threads[lock[3]].setTime(currentTime);
-                }else if (cpu() > 70){
+                }else if (cpu() > 0.7){
                     threads[lock[3]].setTime(currentTime);
                     threads[lock[2]].setTime(currentTime);
-                }else if(cpu() > 60){
-                    for(int i = 3; i <= 0; i--){
+                }else if(cpu() > 0.6){
+                    for(int i = 3; i >= 0; i--){
                         threads[lock[i]].setTime(currentTime);
                         threads[lock[i]].graph = false;
                     }
                 }else{
-                    for(int i = 3; i <= 0; i--){
+                    for(int i = 3; i >= 0; i--){
                         threads[lock[i]].setTime(currentTime);
                         threads[lock[i]].graph = true;
                     }
