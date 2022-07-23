@@ -15,8 +15,7 @@ public class Main extends Thread{
         return currentTime;
     }
 
-    public void run(){
-        System.out.println("trying hard");
+    public void run() {
         currentTime = Instant.now().getEpochSecond();
         while (true) {
             try {
@@ -40,25 +39,25 @@ public class Main extends Thread{
 
         ZoneId zone1 = ZoneId.of(cityName1);
         LocalTime now1 = LocalTime.now(zone1);
-        thread1 = new Clock(now1,zone1);
+        thread1 = new Clock(now1,zone1, 1);
         thread1.setPriority(1);
         thread1.start();
 
         ZoneId zone2 = ZoneId.of(cityName2);
         LocalTime now2 = LocalTime.now(zone2);
-        thread2 = new Clock(now2,zone2);
+        thread2 = new Clock(now2,zone2, 2);
         thread2.setPriority(2);
         thread2.start();
 
         ZoneId zone3 = ZoneId.of(cityName3);
         LocalTime now3 = LocalTime.now(zone3);
-        thread3 = new Clock(now3,zone3);
+        thread3 = new Clock(now3,zone3, 3);
         thread3.setPriority(3);
         thread3.start();
 
         ZoneId zone4 = ZoneId.of(cityName4);
         LocalTime now4 = LocalTime.now(zone4);
-        thread4 = new Clock(now4,zone4);
+        thread4 = new Clock(now4,zone4, 4);
         thread4.setPriority(4);
         thread4.start();
 

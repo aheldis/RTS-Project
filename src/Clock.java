@@ -7,10 +7,12 @@ public class Clock extends Thread {
     LocalTime timezone;
     ZoneId zoneId;
     GraphicalClock graphicalClock;
+    int id;
 
-    public Clock(LocalTime timezone, ZoneId zoneId) {
+    public Clock(LocalTime timezone, ZoneId zoneId, int id) {
         this.timezone = timezone;
         this.zoneId = zoneId;
+        this.id = id;
     }
 
     public void setTime(long time) {
@@ -18,9 +20,10 @@ public class Clock extends Thread {
     }
 
     public void run() {
-        graphicalClock = new GraphicalClock();
-        graphicalClock.setPriority(this.getPriority() + 4);
-        graphicalClock.start();
+        graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
+        graphicalClock.setTime(this.timezone);
+        Thread graphicalClockThread = graphicalClock.getClockThread();
+        graphicalClockThread.setPriority(this.getPriority() - 4);
         while (true) {
             try {
                 graphicalClock.setTime(this.timezone);
