@@ -1,16 +1,20 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-public class GraphicalClock {
+public class GraphicalClock extends Thread {
+    LocalTime time;
 
-    static void display() {
+    void setTime(LocalTime time) {
+        this.time = time;
+    }
+    void display() {
         JFrame frame = new JFrame("Graphical Clock");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.PINK);
@@ -27,21 +31,16 @@ public class GraphicalClock {
         frame.setVisible(true);
 
         int delay = 10;
-        Timer timer = new Timer(delay, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LocalDateTime now = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String formattedDateTime = now.format(formatter);
-                timeLabel.setText(formattedDateTime);
-            }
+        Timer timer = new Timer(delay, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedDateTime = time.format(formatter);
+            timeLabel.setText(formattedDateTime);
         });
 
         timer.start();
     }
 
-    public static void main(String args[]) {
+    public void run() {
         display();
     }
 }
