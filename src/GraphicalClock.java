@@ -21,7 +21,6 @@ public class GraphicalClock extends JPanel implements Runnable {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocationXY((id - 2) * 300 + dim.width / 3 - this.getSize().width,
                 dim.height / 3 - this.getSize().height);
-        clockThread.start();
     }
 
     void setTime(LocalTime time) {

@@ -25,11 +25,12 @@ public class Clock extends Thread {
     public void run() {
         graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
         graphicalClock.setTime(this.timezone);
+        Thread graphicalClockThread = graphicalClock.getClockThread();
         if (graph) {
-            graphicalClock.setPriority(this.getPriority() - 4);
-            graphicalClock.start();
+            graphicalClockThread.setPriority(this.getPriority() - 4);
+            graphicalClockThread.start();
         }else{
-            graphicalClock.suspend();
+            graphicalClockThread.suspend();
         }
         while (true) {
             try {
