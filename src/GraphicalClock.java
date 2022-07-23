@@ -34,7 +34,7 @@ public class GraphicalClock extends JPanel implements Runnable {
         this.location_y = y;
     }
 
-    Thread getClockThread(){
+    Thread getClockThread() {
         return clockThread;
     }
 
@@ -72,10 +72,15 @@ public class GraphicalClock extends JPanel implements Runnable {
             yh = (int) (Math.sin((h * 30 + m / 2) * Math.PI / 180 - Math.PI / 2) * 60 + 0);
             repaint();
 
-            if (!graph){
+            if (!graph) {
                 f.setVisible(false);
-            }else {
+            } else {
                 f.setVisible(true);
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }

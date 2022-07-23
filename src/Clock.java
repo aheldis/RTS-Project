@@ -33,16 +33,16 @@ public class Clock extends Thread {
         }
         while (true) {
             try {
-                if((graph) && (graphicalClock.graph == false)) {
+                if ((graph) && (graphicalClock.graph == false)) {
                     graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
                     graphicalClock.graph = graph;
                     graphicalClock.setTime(this.timezone);
                     Thread graphicalClockThread = graphicalClock.getClockThread();
                     graphicalClockThread.setPriority(this.getPriority() - 4);
                     graphicalClockThread.start();
-                }else if (graph){
+                } else if (graph) {
                     graphicalClock.setTime(this.timezone);
-                }else{
+                } else {
                     graphicalClock.graph = graph;
                 }
                 System.out.print(zoneId + "\t" + timezone + "\n");
