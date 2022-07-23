@@ -1,25 +1,22 @@
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
-//import com.sun.management.OperatingSystemMXBean;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
 public class Clock extends Thread {
 
-    public void run()
-    {
+    public void run() {
         System.out.println("Thread Started Running...");
     }
 
     public static double getCPUUtilization() {
         OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-//        return osBean.getSystemCpuLoad();
-        return 2.5;
+        //todo
+        return osBean.getSystemLoadAverage();
     }
 
-    public static void main(String[] args)
-    {
-        getCPUUtilization();
+    public static void main(String[] args) {
+
         ZoneId zone1 = ZoneId.of("Europe/Paris");
         LocalTime now1 = LocalTime.now(zone1);
         System.out.printf("Paris time: %s%n \n", now1);
