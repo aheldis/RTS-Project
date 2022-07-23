@@ -10,12 +10,14 @@ public class GraphicalClock extends JPanel implements Runnable {
     int xs, ys, xm, ym, xh, yh;
     Thread clockThread = new Thread(this);
     LocalTime time;
+    public boolean graph;
 
     int location_x, location_y;
     ZoneId zoneId;
 
     public GraphicalClock(LocalTime time, int id, ZoneId zoneId) {
         this.time = time;
+        this.graph = true;
         this.setDoubleBuffered(true);
         this.zoneId = zoneId;
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -69,6 +71,12 @@ public class GraphicalClock extends JPanel implements Runnable {
             xh = (int) (Math.cos((h * 30 + m / 2) * Math.PI / 180 - Math.PI / 2) * 60 + 0);
             yh = (int) (Math.sin((h * 30 + m / 2) * Math.PI / 180 - Math.PI / 2) * 60 + 0);
             repaint();
+
+            if (!graph){
+                f.setVisible(false);
+            }else {
+                f.setVisible(true);
+            }
         }
     }
 

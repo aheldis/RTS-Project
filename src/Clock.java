@@ -10,7 +10,7 @@ public class Clock extends Thread {
     int id;
 
     public boolean graph;
-    
+
     public Clock(LocalTime timezone, ZoneId zoneId, int id) {
         this.timezone = timezone;
         this.zoneId = zoneId;
@@ -24,17 +24,27 @@ public class Clock extends Thread {
 
     public void run() {
         graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
-        graphicalClock.setTime(this.timezone);
-        Thread graphicalClockThread = graphicalClock.getClockThread();
+        graphicalClock.graph = graph;
         if (graph) {
+            graphicalClock.setTime(this.timezone);
+            Thread graphicalClockThread = graphicalClock.getClockThread();
             graphicalClockThread.setPriority(this.getPriority() - 4);
             graphicalClockThread.start();
-        }else{
-            graphicalClockThread.suspend();
         }
         while (true) {
             try {
-                graphicalClock.setTime(this.timezone);
+                if((graph) && (graphicalClock.graph == false)) {
+                    graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
+                    graphicalClock.graph = graph;
+                    graphicalClock.setTime(this.timezone);
+                    Thread graphicalClockThread = graphicalClock.getClockThread();
+                    graphicalClockThread.setPriority(this.getPriority() - 4);
+                    graphicalClockThread.start();
+                }else if (graph){
+                    graphicalClock.setTime(this.timezone);
+                }else{
+                    graphicalClock.graph = graph;
+                }
                 System.out.print(zoneId + "\t" + timezone + "\n");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

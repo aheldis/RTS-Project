@@ -1,4 +1,3 @@
-
 import com.sun.management.OperatingSystemMXBean;
 
 import java.lang.management.ManagementFactory;
@@ -11,9 +10,7 @@ public class Main extends Thread{
     static private long currentTime = 0;
 
     static Clock[] threads = new Clock[4];
-//    static Clock thread2;
-//    static Clock thread3;
-//    static Clock thread4;
+
 
     static public long getCurrentTime(){
         return currentTime;
@@ -32,12 +29,21 @@ public class Main extends Thread{
 
             try {
                 Thread.sleep(1000);
-                if (cpu() > 0.9){
+                System.out.println(cpu());
+                System.out.println("--------------");
+                if (cpu() > 0.90){
                     threads[lock[3]].setTime(currentTime);
-                }else if (cpu() > 0.7){
+                    for(int i = 3; i >= 0; i--){
+                        threads[lock[i]].graph = false;
+                    }
+                }else if (cpu() > 0.70){
                     threads[lock[3]].setTime(currentTime);
                     threads[lock[2]].setTime(currentTime);
-                }else if(cpu() > 0.6){
+                    for(int i = 3; i >= 0; i--){
+                        threads[lock[i]].graph = false;
+                    }
+
+                }else if(cpu() > 0.60){
                     for(int i = 3; i >= 0; i--){
                         threads[lock[i]].setTime(currentTime);
                         threads[lock[i]].graph = false;
