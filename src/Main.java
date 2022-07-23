@@ -1,4 +1,3 @@
-
 import com.sun.management.OperatingSystemMXBean;
 
 import java.lang.management.ManagementFactory;
@@ -11,9 +10,7 @@ public class Main extends Thread{
     static private long currentTime = 0;
 
     static Clock[] threads = new Clock[4];
-//    static Clock thread2;
-//    static Clock thread3;
-//    static Clock thread4;
+
 
     static public long getCurrentTime(){
         return currentTime;
@@ -26,25 +23,33 @@ public class Main extends Thread{
     }
 
     public void run(){
-        System.out.println("trying hard");
         currentTime = Instant.now().getEpochSecond();
         Random rand = new Random();
         while (true) {
 
             try {
                 Thread.sleep(1000);
-                if (cpu() > 90){
+                System.out.println(cpu());
+                System.out.println("--------------");
+                if (cpu() > 0.90){
                     threads[lock[3]].setTime(currentTime);
-                }else if (cpu() > 70){
+                    for(int i = 3; i >= 0; i--){
+                        threads[lock[i]].graph = false;
+                    }
+                }else if (cpu() > 0.70){
                     threads[lock[3]].setTime(currentTime);
                     threads[lock[2]].setTime(currentTime);
-                }else if(cpu() > 60){
-                    for(int i = 3; i <= 0; i--){
+                    for(int i = 3; i >= 0; i--){
+                        threads[lock[i]].graph = false;
+                    }
+
+                }else if(cpu() > 0.60){
+                    for(int i = 3; i >= 0; i--){
                         threads[lock[i]].setTime(currentTime);
                         threads[lock[i]].graph = false;
                     }
                 }else{
-                    for(int i = 3; i <= 0; i--){
+                    for(int i = 3; i >= 0; i--){
                         threads[lock[i]].setTime(currentTime);
                         threads[lock[i]].graph = true;
                     }

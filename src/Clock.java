@@ -7,14 +7,14 @@ public class Clock extends Thread {
     LocalTime timezone;
     ZoneId zoneId;
     GraphicalClock graphicalClock;
-    int threadNumber;
+    int id;
 
     public boolean graph;
 
-    public Clock(LocalTime timezone, ZoneId zoneId, int threadNumber) {
+    public Clock(LocalTime timezone, ZoneId zoneId, int id) {
         this.timezone = timezone;
         this.zoneId = zoneId;
-        this.threadNumber = threadNumber;
+        this.id = id;
         this.graph = true;
     }
 
@@ -23,18 +23,27 @@ public class Clock extends Thread {
     }
 
     public void run() {
-        graphicalClock = new GraphicalClock();
+        graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
+        graphicalClock.graph = graph;
         if (graph) {
-            graphicalClock.threadNum = this.threadNumber;
-            graphicalClock.setPriority(this.getPriority() - 4);
-            graphicalClock.start();
-        }else{
-            graphicalClock.suspend();
+            graphicalClock.setTime(this.timezone);
+            Thread graphicalClockThread = graphicalClock.getClockThread();
+            graphicalClockThread.setPriority(this.getPriority() - 4);
+            graphicalClockThread.start();
         }
         while (true) {
             try {
-                if (graph) {
+                if((graph) && (graphicalClock.graph == false)) {
+                    graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
+                    graphicalClock.graph = graph;
                     graphicalClock.setTime(this.timezone);
+                    Thread graphicalClockThread = graphicalClock.getClockThread();
+                    graphicalClockThread.setPriority(this.getPriority() - 4);
+                    graphicalClockThread.start();
+                }else if (graph){
+                    graphicalClock.setTime(this.timezone);
+                }else{
+                    graphicalClock.graph = graph;
                 }
                 System.out.print(zoneId + "\t" + timezone + "\n");
                 Thread.sleep(1000);
