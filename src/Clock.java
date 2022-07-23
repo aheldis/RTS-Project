@@ -9,10 +9,13 @@ public class Clock extends Thread {
     GraphicalClock graphicalClock;
     int id;
 
+    public boolean graph;
+    
     public Clock(LocalTime timezone, ZoneId zoneId, int id) {
         this.timezone = timezone;
         this.zoneId = zoneId;
         this.id = id;
+        this.graph = true;
     }
 
     public void setTime(long time) {
@@ -22,8 +25,12 @@ public class Clock extends Thread {
     public void run() {
         graphicalClock = new GraphicalClock(this.timezone, id, zoneId);
         graphicalClock.setTime(this.timezone);
-        Thread graphicalClockThread = graphicalClock.getClockThread();
-        graphicalClockThread.setPriority(this.getPriority() - 4);
+        if (graph) {
+            graphicalClock.setPriority(this.getPriority() - 4);
+            graphicalClock.start();
+        }else{
+            graphicalClock.suspend();
+        }
         while (true) {
             try {
                 graphicalClock.setTime(this.timezone);
