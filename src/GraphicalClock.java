@@ -11,7 +11,7 @@ import javax.swing.Timer;
 public class GraphicalClock {
 
     static void display() {
-        JFrame frame = new JFrame("Digital Clock");
+        JFrame frame = new JFrame("Graphical Clock");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.PINK);
         
