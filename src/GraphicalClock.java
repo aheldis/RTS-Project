@@ -77,11 +77,11 @@ public class GraphicalClock extends JPanel implements Runnable {
             } else {
                 f.setVisible(true);
             }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
         }
     }
 
